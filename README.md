@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tritreeeee
+
+*(With 5 × e)*
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It allows to display and edit "Tritrees" as inspired by [Jeff
+aka @ippsketch's Tweet](https://twitter.com/ippsketch/status/1414947706968199170/photo/2).
 
 ## Getting Started
 
