@@ -206,7 +206,26 @@ const rotate: Tool = (triTri, path) => {
   };
 };
 
-const tools = { subdivide, rotate } as const;
+const merge: Tool = (triTri, path) => {
+  if (path.length === 1) {
+    if (!triTri.divided) throw new Error('Merging a path which is not split');
+    return triTri.children[path[0]];
+  }
+
+  const [next, ...rest] = path;
+
+  if (!triTri.divided) throw new Error('Moving down a path which is not split');
+
+  return {
+    ...triTri,
+    children: {
+      ...triTri.children,
+      [next]: merge(triTri.children[next], rest),
+    },
+  };
+};
+
+const tools = { subdivide, rotate, merge } as const;
 type ToolName = keyof typeof tools;
 
 const Home: NextPage = () => {
