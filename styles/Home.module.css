@@ -20,11 +20,17 @@
   bottom: 1rem;
   right: 1rem;
   text-align: right;
+  opacity: 0.5;
 }
 
 @media (max-width: 600px) {
   .title {
     display: none;
+  }
+
+
+  .footer {
+    font-size: 0.7em;
   }
 }
 
