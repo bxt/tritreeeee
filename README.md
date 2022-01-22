@@ -17,7 +17,7 @@ To get started run
 npm install
 ```
 
-Developing works best if you use an IDE with TypeScript and ESLint support built in. Then just start the dev server:
+Developing works best if you use an IDE with TypeScript and ESLint support built-in. Then just start the dev server:
 
 ```bash
 npm run dev
