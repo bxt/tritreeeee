@@ -39,6 +39,14 @@
   left: -57.5vh;
   width: calc(100vw + 115vh);
   height: calc(100vh + 87vw);
-  background-color: bisque;
+  background-color: rgb(50, 0, 90);
+}
 
+.interactionHelper {
+  fill: transparent;
+}
+
+.interactionHelper:hover {
+  stroke: hotpink;
+  stroke-width: 0.5;
 }
