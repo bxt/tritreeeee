@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { VFC, useCallback, useState } from 'react';
+import { VFC, useCallback, useState, Fragment } from 'react';
 import styles from '../styles/Home.module.css';
 
 const directions = ['mid', 'left', 'right', 'top'] as const;
@@ -479,10 +479,9 @@ const Home: NextPage = () => {
             <>
               <span className={styles.title}> Tritreeeee</span>
               {Object.keys(tools).map((currentToolName) => (
-                <>
+                <Fragment key={currentToolName}>
                   {' '}
                   <button
-                    key={currentToolName}
                     disabled={currentToolName === toolName}
                     onClick={() => {
                       setToolName(currentToolName as ToolName);
@@ -490,7 +489,7 @@ const Home: NextPage = () => {
                   >
                     {currentToolName}
                   </button>
-                </>
+                </Fragment>
               ))}{' '}
               <select
                 value={triangleVisualizerName}
