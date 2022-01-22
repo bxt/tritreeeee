@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { FC, useCallback, useState } from 'react';
+import { VFC, useCallback, useState } from 'react';
 import styles from '../styles/Home.module.css';
 
 const directions = ['mid', 'left', 'right', 'top'] as const;
@@ -13,12 +13,91 @@ type TriTree =
   | { divided: true; children: Record<Direction, TriTree> }
   | { divided: false; orientation: number };
 
-const Triangle: FC<{
+type TriangleVisualizer = VFC<{
+  coords: TriangleCoords;
+  orientation: number;
+  path: Direction[];
+  onClick: () => void;
+}>;
+
+const PastellyTris: TriangleVisualizer = ({
+  coords,
+  orientation,
+  path,
+  onClick,
+}) => {
+  const points = coords.map((c) => c.join(',')).join(' ');
+  const fillNumber =
+    orientation +
+    path.reduce((acc, direction) => {
+      return (
+        acc +
+        {
+          mid: 0,
+          left: 1,
+          right: 3,
+          top: 2,
+        }[direction]
+      );
+    }, 0);
+  const colors = [
+    '#313131',
+    '#77777',
+    '#bfb1d5',
+    '#adddcf',
+    '#abe1fd',
+    '#fed1be',
+    '#f0e0a2',
+    '#e8e7e5',
+  ];
+  const fill = colors[fillNumber % colors.length];
+  return (
+    <polygon
+      points={points}
+      data-path={path.join(',')}
+      data-orientation={orientation}
+      style={{ fill }}
+      onClick={onClick}
+    />
+  );
+};
+
+const Arrows: TriangleVisualizer = ({ coords, orientation, path, onClick }) => {
+  const points = coords.map((c) => c.join(',')).join(' ');
+
+  const [[xl, yl], m, [xr, yr]] = coords.map(
+    (_, i) => coords[(i + orientation) % coords.length],
+  );
+  const llr = [(xl + xl + xr) / 3, (yl + yl + yr) / 3];
+  const lrr = [(xl + xr + xr) / 3, (yl + yr + yr) / 3];
+  const coordsArrow = [llr, m, lrr];
+  const pointsArrow = coordsArrow.map((c) => c.join(',')).join(' ');
+
+  return (
+    <>
+      <polygon
+        points={pointsArrow}
+        style={{ fill: '#e1933b' }}
+        onClick={onClick}
+      />
+    </>
+  );
+};
+
+const triangleVisualizers = { PastellyTris, Arrows } as const;
+type TriangleVisualizersName = keyof typeof triangleVisualizers;
+
+const Triangle: VFC<{
   coords: TriangleCoords;
   triTree: TriTree;
   path: Direction[];
   onClickTriangle: (path: Direction[]) => void;
-}> = ({ coords, triTree, path, onClickTriangle }) => {
+  TriangleVisualizer: TriangleVisualizer;
+}> = ({ coords, triTree, path, onClickTriangle, TriangleVisualizer }) => {
+  const onClick = useCallback(() => {
+    onClickTriangle(path);
+  }, [onClickTriangle, path]);
+
   if (triTree.divided) {
     const [l, m, r] = coords;
     const [[xl, yl], [xm, ym], [xr, yr]] = coords;
@@ -34,71 +113,48 @@ const Triangle: FC<{
           coords={[l, lm, lr]}
           path={[...path, 'left']}
           onClickTriangle={onClickTriangle}
+          TriangleVisualizer={TriangleVisualizer}
         />
         <Triangle
           triTree={right}
           coords={[lr, rm, r]}
           path={[...path, 'right']}
           onClickTriangle={onClickTriangle}
+          TriangleVisualizer={TriangleVisualizer}
         />
         <Triangle
           triTree={mid}
           coords={[lm, lr, rm]}
           path={[...path, 'mid']}
           onClickTriangle={onClickTriangle}
+          TriangleVisualizer={TriangleVisualizer}
         />
         <Triangle
           triTree={top}
           coords={[lm, m, rm]}
           path={[...path, 'top']}
           onClickTriangle={onClickTriangle}
+          TriangleVisualizer={TriangleVisualizer}
         />
       </>
     );
   } else {
-    const points = coords.map((c) => c.join(',')).join(' ');
-    const fillNumber =
-      triTree.orientation +
-      path.reduce((acc, direction) => {
-        return (
-          acc +
-          {
-            mid: 0,
-            left: 1,
-            right: 3,
-            top: 2,
-          }[direction]
-        );
-      }, 0);
-    const colors = [
-      '#313131',
-      '#77777',
-      '#bfb1d5',
-      '#adddcf',
-      '#abe1fd',
-      '#fed1be',
-      '#f0e0a2',
-      '#e8e7e5',
-    ];
-    const fill = colors[fillNumber % colors.length];
     return (
-      <polygon
-        points={points}
-        data-path={path.join(',')}
-        data-orientation={triTree.orientation}
-        style={{ fill }}
-        onClick={() => {
-          onClickTriangle(path);
-        }}
+      <TriangleVisualizer
+        coords={coords}
+        orientation={triTree.orientation}
+        path={path}
+        onClick={onClick}
       />
     );
   }
 };
 
-const TriTreeVisualizer: FC<{
+const TriTreeVisualizer: VFC<{
   triTree: TriTree;
   onClickTriangle: (path: Direction[]) => void;
-}> = ({ triTree, onClickTriangle }) => {
+  TriangleVisualizer: TriangleVisualizer;
+}> = ({ triTree, onClickTriangle, TriangleVisualizer }) => {
   const initialPoints: TriangleCoords = [
     [0, 0],
     [500, 866],
@@ -112,6 +168,7 @@ const TriTreeVisualizer: FC<{
           coords={initialPoints}
           path={[]}
           onClickTriangle={onClickTriangle}
+          TriangleVisualizer={TriangleVisualizer}
         />
       </svg>
     </div>
@@ -237,6 +294,8 @@ const Home: NextPage = () => {
   const [isControlsExpanded, setIsControlsExpanded] = useState(true);
   const [triTree, setTriTree] = useState<TriTree>(initialTriTree);
   const [toolName, setToolName] = useState<ToolName>('subdivide');
+  const [triangleVisualizerName, setTriangleVisualizerName] =
+    useState<TriangleVisualizersName>('PastellyTris');
 
   const onClickTriangle = useCallback(
     (path: Direction[]): void => {
@@ -257,6 +316,7 @@ const Home: NextPage = () => {
         <TriTreeVisualizer
           triTree={triTree}
           onClickTriangle={onClickTriangle}
+          TriangleVisualizer={triangleVisualizers[triangleVisualizerName]}
         />
         <aside className={styles.controls}>
           <button
@@ -281,7 +341,23 @@ const Home: NextPage = () => {
                     {currentToolName}
                   </button>
                 </>
-              ))}
+              ))}{' '}
+              <select
+                value={triangleVisualizerName}
+                onChange={(event) => {
+                  setTriangleVisualizerName(
+                    event.target.value as TriangleVisualizersName,
+                  );
+                }}
+              >
+                {Object.keys(triangleVisualizers).map(
+                  (currentTriangleVisualizerName) => (
+                    <option key={currentTriangleVisualizerName}>
+                      {currentTriangleVisualizerName}
+                    </option>
+                  ),
+                )}
+              </select>
             </>
           )}
         </aside>
