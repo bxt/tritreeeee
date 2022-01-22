@@ -57,17 +57,19 @@ const Triangle: FC<{
     );
   } else {
     const points = coords.map((c) => c.join(',')).join(' ');
-    const fillNumber = path.reduce((acc, direction) => {
-      return (
-        acc +
-        {
-          mid: 0,
-          left: 1,
-          right: 3,
-          top: 2,
-        }[direction]
-      );
-    }, 0);
+    const fillNumber =
+      triTree.orientation +
+      path.reduce((acc, direction) => {
+        return (
+          acc +
+          {
+            mid: 0,
+            left: 1,
+            right: 3,
+            top: 2,
+          }[direction]
+        );
+      }, 0);
     const colors = [
       '#313131',
       '#77777',
@@ -83,6 +85,7 @@ const Triangle: FC<{
       <polygon
         points={points}
         data-path={path.join(',')}
+        data-orientation={triTree.orientation}
         style={{ fill }}
         onClick={() => {
           onClickTriangle(path);
@@ -154,7 +157,9 @@ const initialTriTree: TriTree = {
   },
 };
 
-const subdivide = (triTri: TriTree, path: Direction[]): TriTree => {
+type Tool = (triTri: TriTree, path: Direction[]) => TriTree;
+
+const subdivide: Tool = (triTri, path) => {
   if (path.length === 0)
     return {
       divided: true,
@@ -179,15 +184,41 @@ const subdivide = (triTri: TriTree, path: Direction[]): TriTree => {
   };
 };
 
+const rotate: Tool = (triTri, path) => {
+  if (path.length === 0) {
+    if (triTri.divided) throw new Error('Rotating a path which is split');
+    return {
+      ...triTri,
+      orientation: triTri.orientation + 1,
+    };
+  }
+
+  const [next, ...rest] = path;
+
+  if (!triTri.divided) throw new Error('Moving down a path which is not split');
+
+  return {
+    ...triTri,
+    children: {
+      ...triTri.children,
+      [next]: rotate(triTri.children[next], rest),
+    },
+  };
+};
+
+const tools = { subdivide, rotate } as const;
+type ToolName = keyof typeof tools;
+
 const Home: NextPage = () => {
   const [isControlsExpanded, setIsControlsExpanded] = useState(true);
   const [triTree, setTriTree] = useState<TriTree>(initialTriTree);
+  const [toolName, setToolName] = useState<ToolName>('subdivide');
 
   const onClickTriangle = useCallback(
     (path: Direction[]): void => {
-      setTriTree((triTree) => subdivide(triTree, path));
+      setTriTree((triTree) => tools[toolName](triTree, path));
     },
-    [setTriTree],
+    [toolName],
   );
 
   return (
@@ -213,6 +244,20 @@ const Home: NextPage = () => {
           {isControlsExpanded && (
             <>
               <span className={styles.title}>Tritreeeee</span>
+              {Object.keys(tools).map((currentToolName) => (
+                <>
+                  {' '}
+                  <button
+                    key={currentToolName}
+                    disabled={currentToolName === toolName}
+                    onClick={() => {
+                      setToolName(currentToolName as ToolName);
+                    }}
+                  >
+                    {currentToolName}
+                  </button>
+                </>
+              ))}
             </>
           )}
         </aside>
