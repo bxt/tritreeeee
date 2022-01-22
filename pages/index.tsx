@@ -445,7 +445,7 @@ const Home: NextPage = () => {
   const [triTree, setTriTree] = useState<TriTree>(initialTriTree);
   const [toolName, setToolName] = useState<ToolName>('subdivide');
   const [triangleVisualizerName, setTriangleVisualizerName] =
-    useState<TriangleVisualizersName>('PastellyTris');
+    useState<TriangleVisualizersName>('CircleSections');
 
   const onClickTriangle = useCallback(
     (path: Direction[]): void => {
