@@ -1,6 +1,11 @@
 
 .main {
-  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
 
 .controls {
@@ -21,4 +26,13 @@
   .title {
     display: none;
   }
+}
+
+.triContainer {
+  position: absolute;
+  left: -57.5vh;
+  width: calc(100vw + 115vh);
+  height: calc(100vh + 87vw);
+  background-color: bisque;
+
 }
