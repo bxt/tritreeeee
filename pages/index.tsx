@@ -207,6 +207,11 @@ const rotate: Tool = (triTri, path) => {
 };
 
 const merge: Tool = (triTri, path) => {
+  if (path.length === 0) {
+    // trying to merge topmost tri
+    return triTri;
+  }
+
   if (path.length === 1) {
     if (!triTri.divided) throw new Error('Merging a path which is not split');
     return triTri.children[path[0]];
