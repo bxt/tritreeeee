@@ -267,7 +267,7 @@ const Home: NextPage = () => {
           </button>
           {isControlsExpanded && (
             <>
-              <span className={styles.title}>Tritreeeee</span>
+              <span className={styles.title}> Tritreeeee</span>
               {Object.keys(tools).map((currentToolName) => (
                 <>
                   {' '}
