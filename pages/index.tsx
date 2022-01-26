@@ -109,8 +109,7 @@ const CircleSection: VFC<{
   return (
     <path
       d={`M ${from.join(' ')} A ${r} ${r} 0 0 ${sweepFlag} ${to.join(' ')}`}
-      fill="none"
-      style={{ stroke: 'var(--colorPrimary)' }}
+      className={styles.circleSection}
       strokeWidth={circleSectionsStroke}
     />
   );
@@ -148,7 +147,7 @@ const CircleCover: VFC<{
       d={`M ${xl} ${yl} L ${from.join(
         ' ',
       )} A ${r} ${r} 0 0 ${sweepFlag} ${to.join(' ')} Z`}
-      style={{ fill: 'var(--colorBackground)' }}
+      className={styles.circleCover}
     />
   );
 };

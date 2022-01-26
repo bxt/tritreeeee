@@ -1,7 +1,7 @@
 
 .grayscale {
-  --color0: #000;
-  --color1: #fff;
+  --color0: #fff;
+  --color1: #000;
   --color2: #666;
   --color3: #999;
   --color4: #333;
@@ -13,10 +13,10 @@
 .blackpink {
   --color0: rgb(50, 0, 90);
   --color1: rgb(255, 105, 180);
-  --color2: rgb(61, 60, 107);
-  --color3: rgb(105, 195, 255);
-  --color4: rgb(235, 20, 110);
-  --color5: rgb(228, 125, 7);
+  --color2: rgb(228, 125, 7);
+  --color3: rgb(61, 60, 107);
+  --color4: rgb(105, 195, 255);
+  --color5: rgb(235, 20, 110);
   --color6: rgb(55, 4, 75);
   --color7: rgb(30, 32, 44);
 }
@@ -32,14 +32,22 @@
   --color7: #777777;
 }
 
-
 .theme {
   --colorBackground: var(--color0);
   --colorPrimary: var(--color1);
   --colorSecondary: var(--color2);
+
+  color: var(--colorPrimary);
+  text-shadow:
+    1px -1px 0px var(--colorBackground),
+    -1px -1px 0px var(--colorBackground),
+    -1px 1px 0px var(--colorBackground),
+    1px 1px 0px var(--colorBackground);
 }
 
-
+.theme a {
+  color: var(--colorSecondary);
+}
 
 .main {
   position: absolute;
@@ -54,15 +62,15 @@
   position: absolute;
   top: 1rem;
   left: 1rem;
-  right: 1rem;
+  max-width: calc(100vw - 2rem);
 }
 
 .footer {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
+  max-width: calc(100vw - 2rem);
   text-align: right;
-  opacity: 0.5;
 }
 
 @media (max-width: 600px) {
@@ -81,6 +89,15 @@
   width: calc(100vw + 115vh);
   height: calc(100vh + 87vw);
   background-color: var(--colorBackground);
+}
+
+.circleSection {
+  fill: none;
+  stroke: var(--colorPrimary);
+}
+
+.circleCover {
+  fill: var(--colorBackground);
 }
 
 .interactionHelper {
