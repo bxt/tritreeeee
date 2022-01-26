@@ -3,6 +3,11 @@ import Head from 'next/head';
 import { VFC, useCallback, useState, Fragment } from 'react';
 import styles from '../styles/Home.module.css';
 
+const THEME_COLOR_COUNT = 8;
+
+const getColor = (number: number) =>
+  `var(--color${number % THEME_COLOR_COUNT})`;
+
 const directions = ['mid', 'left', 'right', 'top'] as const;
 type Direction = typeof directions[number];
 
@@ -40,17 +45,7 @@ const PastellyTris: TriangleVisualizer = ({
         }[direction]
       );
     }, 0);
-  const colors = [
-    '#313131',
-    '#77777',
-    '#bfb1d5',
-    '#adddcf',
-    '#abe1fd',
-    '#fed1be',
-    '#f0e0a2',
-    '#e8e7e5',
-  ];
-  const fill = colors[fillNumber % colors.length];
+  const fill = getColor(fillNumber);
   return (
     <polygon
       points={points}
@@ -77,7 +72,7 @@ const Arrows: TriangleVisualizer = ({ coords, orientation, path, onClick }) => {
     <>
       <polygon
         points={pointsArrow}
-        style={{ fill: '#e1933b' }}
+        style={{ fill: 'var(--colorPrimary)' }}
         onClick={onClick}
       />
     </>
@@ -115,7 +110,7 @@ const CircleSection: VFC<{
     <path
       d={`M ${from.join(' ')} A ${r} ${r} 0 0 ${sweepFlag} ${to.join(' ')}`}
       fill="none"
-      stroke="hotpink"
+      style={{ stroke: 'var(--colorPrimary)' }}
       strokeWidth={circleSectionsStroke}
     />
   );
@@ -153,7 +148,7 @@ const CircleCover: VFC<{
       d={`M ${xl} ${yl} L ${from.join(
         ' ',
       )} A ${r} ${r} 0 0 ${sweepFlag} ${to.join(' ')} Z`}
-      fill="rgb(50, 0, 90)"
+      style={{ fill: 'var(--colorBackground)' }}
     />
   );
 };
@@ -440,12 +435,19 @@ const merge: Tool = (triTri, path) => {
 const tools = { subdivide, rotate, merge } as const;
 type ToolName = keyof typeof tools;
 
+const themes = (() => {
+  const { grayscale, blackpink, pastels } = styles;
+  return { grayscale, blackpink, pastels } as const;
+})();
+type ThemeName = keyof typeof themes;
+
 const Home: NextPage = () => {
   const [isControlsExpanded, setIsControlsExpanded] = useState(true);
   const [triTree, setTriTree] = useState<TriTree>(initialTriTree);
   const [toolName, setToolName] = useState<ToolName>('subdivide');
   const [triangleVisualizerName, setTriangleVisualizerName] =
     useState<TriangleVisualizersName>('CircleSections');
+  const [themeName, setThemeName] = useState<ThemeName>('grayscale');
 
   const onClickTriangle = useCallback(
     (path: Direction[]): void => {
@@ -455,7 +457,7 @@ const Home: NextPage = () => {
   );
 
   return (
-    <>
+    <div className={`${themes[themeName]} ${styles.theme}`}>
       <Head>
         <title>Tritreeeee</title>
         <meta name="description" content="Build your own Tritree for fun" />
@@ -506,6 +508,16 @@ const Home: NextPage = () => {
                     </option>
                   ),
                 )}
+              </select>{' '}
+              <select
+                value={themeName}
+                onChange={(event) => {
+                  setThemeName(event.target.value as ThemeName);
+                }}
+              >
+                {Object.keys(themes).map((currentThemeName) => (
+                  <option key={currentThemeName}>{currentThemeName}</option>
+                ))}
               </select>
             </>
           )}
@@ -524,7 +536,7 @@ const Home: NextPage = () => {
           </a>
         </footer>
       )}
-    </>
+    </div>
   );
 };
 
