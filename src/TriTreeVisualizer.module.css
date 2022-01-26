@@ -1,0 +1,8 @@
+
+.triTreeVisualizer {
+  position: absolute;
+  left: -57.5vh;
+  width: calc(100vw + 115vh);
+  height: calc(100vh + 87vw);
+  background-color: var(--colorBackground);
+}

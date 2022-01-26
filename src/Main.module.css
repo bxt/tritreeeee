@@ -1,37 +1,4 @@
 
-.grayscale {
-  --color0: #fff;
-  --color1: #000;
-  --color2: #666;
-  --color3: #999;
-  --color4: #333;
-  --color5: #ddd;
-  --color6: #444;
-  --color7: #bbb;
-}
-
-.blackpink {
-  --color0: rgb(50, 0, 90);
-  --color1: rgb(255, 105, 180);
-  --color2: rgb(228, 125, 7);
-  --color3: rgb(61, 60, 107);
-  --color4: rgb(105, 195, 255);
-  --color5: rgb(235, 20, 110);
-  --color6: rgb(55, 4, 75);
-  --color7: rgb(30, 32, 44);
-}
-
-.pastels {
-  --color0: #bfb1d5;
-  --color1: #adddcf;
-  --color2: #abe1fd;
-  --color3: #fed1be;
-  --color4: #f0e0a2;
-  --color5: #e8e7e5;
-  --color6: #313131;
-  --color7: #777777;
-}
-
 .theme {
   --colorBackground: var(--color0);
   --colorPrimary: var(--color1);
@@ -89,22 +56,4 @@
   width: calc(100vw + 115vh);
   height: calc(100vh + 87vw);
   background-color: var(--colorBackground);
-}
-
-.circleSection {
-  fill: none;
-  stroke: var(--colorPrimary);
-}
-
-.circleCover {
-  fill: var(--colorBackground);
-}
-
-.interactionHelper {
-  fill: transparent;
-}
-
-.interactionHelper:hover {
-  stroke: var(--colorPrimary);
-  stroke-width: 0.5;
 }

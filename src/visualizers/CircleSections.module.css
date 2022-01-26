@@ -1,0 +1,18 @@
+
+.circleSection {
+  fill: none;
+  stroke: var(--colorPrimary);
+}
+
+.circleCover {
+  fill: var(--colorBackground);
+}
+
+.interactionHelper {
+  fill: transparent;
+}
+
+.interactionHelper:hover {
+  stroke: var(--colorPrimary);
+  stroke-width: 0.5;
+}
