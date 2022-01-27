@@ -49,4 +49,4 @@ npm run build
 
 That's it!
 
-There are some GitHub actions to lint and build the app, as well as deploy the `main` branch to GitHub pages at <https://bxt.github.io/tritreeeee/>.
+There are some GitHub actions to lint and build the app, as well as building the `main` branch and copying the results to the `gh-pages` branch for deploying to GitHub pages at <https://bxt.github.io/tritreeeee/>.
