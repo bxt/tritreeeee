@@ -17,10 +17,10 @@ export const CircleSection: VFC<{
   const [l, m, r] = rotate(coords, orientation);
 
   const fraction = (socketCountTwice - socketNumber * 2 - 1) / socketCountTwice;
-  const from = interpolatePoints(l, r, fraction);
-  const to = interpolatePoints(l, m, fraction);
+  const from = interpolatePoints(m, l, fraction);
+  const to = interpolatePoints(m, r, fraction);
 
-  const radius = distance(l, from);
+  const radius = distance(m, from);
 
   const pathInstructions = [
     `M ${from.join(' ')}`,
@@ -52,15 +52,15 @@ const CircleCover: VFC<{
   const fraction =
     (socketCountTwice - socketNumber * 2 - 1 + strokeFraction) /
     socketCountTwice;
-  const from = interpolatePoints(l, r, fraction);
-  const to = interpolatePoints(l, m, fraction);
+  const from = interpolatePoints(m, r, fraction);
+  const to = interpolatePoints(m, l, fraction);
 
-  const radius = distance(l, from);
+  const radius = distance(m, from);
 
   const pathInstructions = [
-    `M ${l.join(' ')}`,
-    `L ${from.join(' ')}`,
-    `A ${radius} ${radius} 0 0 ${sweepFlag} ${to.join(' ')}`,
+    `M ${m.join(' ')}`,
+    `L ${to.join(' ')}`,
+    `A ${radius} ${radius} 0 0 ${sweepFlag} ${from.join(' ')}`,
     `Z`,
   ];
 

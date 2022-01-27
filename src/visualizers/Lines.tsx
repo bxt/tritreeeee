@@ -24,8 +24,8 @@ export const Lines: TriangleVisualizer = ({
     .flatMap((_, socketNumber) => {
       const fraction =
         (socketCountTwice - socketNumber * 2 - 1) / socketCountTwice;
-      const from = interpolatePoints(l, r, fraction);
-      const to = interpolatePoints(l, m, fraction);
+      const from = interpolatePoints(m, r, fraction);
+      const to = interpolatePoints(m, l, fraction);
 
       return [`M ${from.join(' ')}`, `L ${to.join(' ')}`];
     });
