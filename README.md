@@ -2,14 +2,16 @@
 
 *(With 5 × e)*
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It allows to display and edit "Tritrees" as inspired by [Jeff
+This is a web site that allows to display and edit "Tritrees" as inspired by [Jeff
 aka @ippsketch's Tweet](https://twitter.com/ippsketch/status/1414947706968199170/photo/2).
+You can create all kinds of shapes from triangles, by subdeviding and rotating them.
+There's 4 render modes and 3 color shemes available.
 
 [You can find it running here](https://bxt.github.io/tritreeeee/).
 
 ## Developing
 
-This is a web site that uses web technologies like [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/), [Next.js](https://nextjs.org/), [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) that uses web technologies like [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/), [Next.js](https://nextjs.org/), [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/).
 
 To get started run
 
