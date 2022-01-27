@@ -1,6 +1,7 @@
 import { VFC, useCallback, useState, Fragment } from 'react';
 import { initialTriTree } from './initialTriTree';
 import styles from './Main.module.css';
+import { ButtonSelect, Select } from './Select';
 import { ThemeName, themes } from './themes';
 import { ToolName, tools } from './tools';
 import { TriTreeVisualizer } from './TriTreeVisualizer';
@@ -40,45 +41,23 @@ export const Main: VFC = () => {
           {isControlsExpanded && (
             <>
               <span className={styles.title}> Tritreeeee</span>
-              {Object.keys(tools).map((currentToolName) => (
-                <Fragment key={currentToolName}>
-                  {' '}
-                  <button
-                    disabled={currentToolName === toolName}
-                    onClick={() => {
-                      setToolName(currentToolName as ToolName);
-                    }}
-                  >
-                    {currentToolName}
-                  </button>
-                </Fragment>
-              ))}{' '}
-              <select
+              <ButtonSelect<ToolName>
+                values={tools}
+                value={toolName}
+                setValue={setToolName}
+              />
+              <> </>
+              <Select<TriangleVisualizersName>
+                values={triangleVisualizers}
                 value={triangleVisualizerName}
-                onChange={(event) => {
-                  setTriangleVisualizerName(
-                    event.target.value as TriangleVisualizersName,
-                  );
-                }}
-              >
-                {Object.keys(triangleVisualizers).map(
-                  (currentTriangleVisualizerName) => (
-                    <option key={currentTriangleVisualizerName}>
-                      {currentTriangleVisualizerName}
-                    </option>
-                  ),
-                )}
-              </select>{' '}
-              <select
+                setValue={setTriangleVisualizerName}
+              />
+              <> </>
+              <Select<ThemeName>
+                values={themes}
                 value={themeName}
-                onChange={(event) => {
-                  setThemeName(event.target.value as ThemeName);
-                }}
-              >
-                {Object.keys(themes).map((currentThemeName) => (
-                  <option key={currentThemeName}>{currentThemeName}</option>
-                ))}
-              </select>
+                setValue={setThemeName}
+              />
             </>
           )}
         </aside>
