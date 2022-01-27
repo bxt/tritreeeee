@@ -7,7 +7,13 @@ const baseTriTree: TriTree = {
   orientation: 0,
 };
 
-export const initialTriTree: TriTree = tools.subdivide(
-  tools.subdivide(baseTriTree, []),
-  ['mid'],
+export const initialTriTree: TriTree = tools.rotate(
+  tools.subdivide(
+    tools.subdivide(
+      tools.subdivide(tools.subdivide(baseTriTree, []), ['mid']),
+      ['mid', 'mid'],
+    ),
+    ['mid', 'mid', 'left'],
+  ),
+  ['mid', 'right'],
 );
