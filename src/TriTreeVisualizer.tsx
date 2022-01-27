@@ -1,7 +1,7 @@
 import { VFC, useCallback } from 'react';
+import { interpolatePoints } from './coords';
 import styles from './TriTreeVisualizer.module.css';
 import type {
-  Coord,
   Direction,
   TriangleCoords,
   TriangleVisualizer,
@@ -21,10 +21,9 @@ const Triangle: VFC<{
 
   if (triTree.divided) {
     const [l, m, r] = coords;
-    const [[xl, yl], [xm, ym], [xr, yr]] = coords;
-    const lm: Coord = [(xm + xl) / 2, (ym + yl) / 2];
-    const rm: Coord = [(xm + xr) / 2, (ym + yr) / 2];
-    const lr: Coord = [(xl + xr) / 2, (yl + yr) / 2];
+    const lm = interpolatePoints(m, l, 0.5);
+    const rm = interpolatePoints(m, r, 0.5);
+    const lr = interpolatePoints(l, r, 0.5);
     const { mid, left, right, top } = triTree.children;
 
     return (
