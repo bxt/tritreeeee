@@ -2,52 +2,46 @@ import type { Direction, TriTree } from './types';
 
 type Tool = (triTri: TriTree, path: Direction[]) => TriTree;
 
-const subdivide: Tool = (triTri, path) => {
-  if (path.length === 0)
-    return {
-      divided: true,
-      children: {
-        mid: triTri,
-        left: triTri,
-        right: triTri,
-        top: triTri,
-      },
-    };
+type Mapper = (riTri: TriTree) => TriTree;
 
-  const [next, ...rest] = path;
+const makeToolFromMapper = (mapper: Mapper): Tool => {
+  const tool: Tool = (triTri, path) => {
+    if (path.length === 0) return mapper(triTri);
 
-  if (!triTri.divided) throw new Error('Moving down a path which is not split');
+    const [next, ...rest] = path;
 
-  return {
-    ...triTri,
-    children: {
-      ...triTri.children,
-      [next]: subdivide(triTri.children[next], rest),
-    },
-  };
-};
+    if (!triTri.divided)
+      throw new Error('Moving down a path which is not split');
 
-const rotate: Tool = (triTri, path) => {
-  if (path.length === 0) {
-    if (triTri.divided) throw new Error('Rotating a path which is split');
     return {
       ...triTri,
-      orientation: triTri.orientation + 1,
+      children: {
+        ...triTri.children,
+        [next]: tool(triTri.children[next], rest),
+      },
     };
-  }
+  };
 
-  const [next, ...rest] = path;
+  return tool;
+};
 
-  if (!triTri.divided) throw new Error('Moving down a path which is not split');
-
+const rotate = makeToolFromMapper((triTri) => {
+  if (triTri.divided) throw new Error('Rotating a path which is split');
   return {
     ...triTri,
-    children: {
-      ...triTri.children,
-      [next]: rotate(triTri.children[next], rest),
-    },
+    orientation: triTri.orientation + 1,
   };
-};
+});
+
+const subdivide = makeToolFromMapper((triTri) => ({
+  divided: true,
+  children: {
+    mid: triTri,
+    left: triTri,
+    right: triTri,
+    top: triTri,
+  },
+}));
 
 const merge: Tool = (triTri, path) => {
   if (path.length === 0) {
