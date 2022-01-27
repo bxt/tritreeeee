@@ -1,3 +1,4 @@
+import { interpolatePoints, rotate } from '../coords';
 import type { TriangleVisualizer } from '../types';
 
 export const Arrows: TriangleVisualizer = ({
@@ -6,11 +7,10 @@ export const Arrows: TriangleVisualizer = ({
   path,
   onClick,
 }) => {
-  const [[xl, yl], m, [xr, yr]] = coords.map(
-    (_, i) => coords[(i + orientation) % coords.length],
-  );
-  const llr = [(xl + xl + xr) / 3, (yl + yl + yr) / 3];
-  const lrr = [(xl + xr + xr) / 3, (yl + yr + yr) / 3];
+  const [l, m, r] = rotate(coords, orientation);
+
+  const llr = interpolatePoints(l, r, 2 / 3);
+  const lrr = interpolatePoints(l, r, 1 / 3);
   const coordsArrow = [llr, m, lrr];
   const pointsArrow = coordsArrow.map((c) => c.join(',')).join(' ');
 
