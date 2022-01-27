@@ -5,7 +5,7 @@ import { ButtonSelect, Select } from './Select';
 import { ThemeName, themes } from './themes';
 import { ToolName, tools } from './tools';
 import { TriTreeVisualizer } from './TriTreeVisualizer';
-import { Direction, TriTree } from './types';
+import type { Direction, TriTree } from './types';
 import { triangleVisualizers, TriangleVisualizersName } from './visualizers';
 
 export const Main: VFC = () => {

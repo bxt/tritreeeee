@@ -1,4 +1,4 @@
-import { TriangleVisualizer } from '../types';
+import type { TriangleVisualizer } from '../types';
 
 export const Arrows: TriangleVisualizer = ({
   coords,

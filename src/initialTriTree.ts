@@ -1,4 +1,4 @@
-import { TriTree } from './types';
+import type { TriTree } from './types';
 
 import { tools } from './tools';
 
