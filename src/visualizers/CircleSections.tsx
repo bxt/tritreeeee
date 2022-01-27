@@ -3,7 +3,7 @@ import styles from './CircleSections.module.css';
 import type { TriangleCoords, TriangleVisualizer } from '../types';
 
 const circleSectionsDepth = 7;
-const circleSectionsStroke = 4;
+const circleSectionsStroke = 5;
 
 export const CircleSection: VFC<{
   coords: TriangleCoords;
