@@ -1,19 +1,21 @@
-import type { TriTree } from './types';
+import type { Path, TriTree } from './types';
 
-import { tools } from './tools';
+import { tools, type Tool } from './tools';
 
 const baseTriTree: TriTree = {
   divided: false,
   orientation: 2,
 };
 
-export const initialTriTree: TriTree = tools.rotate(
-  tools.subdivide(
-    tools.subdivide(
-      tools.subdivide(tools.subdivide(baseTriTree, []), ['mid']),
-      ['mid', 'mid'],
-    ),
-    ['mid', 'mid', 'left'],
-  ),
-  ['mid', 'right'],
+const actions: [Tool, Path][] = [
+  [tools.subdivide, []],
+  [tools.subdivide, ['mid']],
+  [tools.rotate, ['mid', 'right']],
+  [tools.subdivide, ['mid', 'mid']],
+  [tools.subdivide, ['mid', 'mid', 'left']],
+];
+
+export const initialTriTree: TriTree = actions.reduce(
+  (acc: TriTree, [tool, path]) => tool(acc, path),
+  baseTriTree,
 );

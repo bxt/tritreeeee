@@ -1,6 +1,6 @@
 import type { Path, TriTree } from './types';
 
-type Tool = (triTri: TriTree, path: Path) => TriTree;
+export type Tool = (triTri: TriTree, path: Path) => TriTree;
 
 type Mapper = (riTri: TriTree) => TriTree;
 
