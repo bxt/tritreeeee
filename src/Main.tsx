@@ -5,7 +5,7 @@ import { ButtonSelect, Select } from './Select';
 import { ThemeName, themes } from './themes';
 import { ToolName, tools } from './tools';
 import { TriTreeVisualizer } from './TriTreeVisualizer';
-import type { Direction, TriTree } from './types';
+import type { Path, TriTree } from './types';
 import { triangleVisualizers, TriangleVisualizersName } from './visualizers';
 
 export const Main: VFC = () => {
@@ -17,7 +17,7 @@ export const Main: VFC = () => {
   const [themeName, setThemeName] = useState<ThemeName>('grayscale');
 
   const onClickTriangle = useCallback(
-    (path: Direction[]): void => {
+    (path: Path): void => {
       setTriTree((triTree) => tools[toolName](triTree, path));
     },
     [toolName],

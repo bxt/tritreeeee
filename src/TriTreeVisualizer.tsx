@@ -2,7 +2,7 @@ import { VFC, useCallback } from 'react';
 import { interpolatePoints } from './coords';
 import styles from './TriTreeVisualizer.module.css';
 import type {
-  Direction,
+  Path,
   TriangleCoords,
   TriangleVisualizer,
   TriTree,
@@ -11,8 +11,8 @@ import type {
 const Triangle: VFC<{
   coords: TriangleCoords;
   triTree: TriTree;
-  path: Direction[];
-  onClickTriangle: (path: Direction[]) => void;
+  path: Path;
+  onClickTriangle: (path: Path) => void;
   TriangleVisualizer: TriangleVisualizer;
 }> = ({ coords, triTree, path, onClickTriangle, TriangleVisualizer }) => {
   const onClick = useCallback(() => {
@@ -72,7 +72,7 @@ const Triangle: VFC<{
 
 export const TriTreeVisualizer: VFC<{
   triTree: TriTree;
-  onClickTriangle: (path: Direction[]) => void;
+  onClickTriangle: (path: Path) => void;
   TriangleVisualizer: TriangleVisualizer;
 }> = ({ triTree, onClickTriangle, TriangleVisualizer }) => {
   const initialPoints: TriangleCoords = [

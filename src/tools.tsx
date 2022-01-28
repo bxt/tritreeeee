@@ -1,6 +1,6 @@
-import type { Direction, TriTree } from './types';
+import type { Path, TriTree } from './types';
 
-type Tool = (triTri: TriTree, path: Direction[]) => TriTree;
+type Tool = (triTri: TriTree, path: Path) => TriTree;
 
 type Mapper = (riTri: TriTree) => TriTree;
 
