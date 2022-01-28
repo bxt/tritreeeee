@@ -6,7 +6,7 @@ import { distance, interpolatePoints, rotate } from '../coords';
 const circleSectionsDepth = 7;
 const circleSectionsStroke = 5;
 
-export const CircleSection: VFC<{
+const CircleSection: VFC<{
   coords: TriangleCoords;
   orientation: number;
   socketCount: number;
