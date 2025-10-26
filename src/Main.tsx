@@ -1,4 +1,4 @@
-import { VFC, useCallback, useState, Fragment } from 'react';
+import { type FC, useCallback, useState, Fragment } from 'react';
 import { initialTriTree } from './initialTriTree';
 import styles from './Main.module.css';
 import { ButtonSelect, Select } from './Select';
@@ -8,7 +8,7 @@ import { TriTreeVisualizer } from './TriTreeVisualizer';
 import type { Path, TriTree } from './types';
 import { triangleVisualizers, TriangleVisualizersName } from './visualizers';
 
-export const Main: VFC = () => {
+export const Main: FC = () => {
   const [isControlsExpanded, setIsControlsExpanded] = useState(true);
   const [triTree, setTriTree] = useState<TriTree>(initialTriTree);
   const [toolName, setToolName] = useState<ToolName>('subdivide');

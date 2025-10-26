@@ -1,4 +1,4 @@
-import { useCallback, Fragment } from 'react';
+import { useCallback, Fragment, type MouseEvent, type ChangeEvent } from 'react';
 
 type SelectProps<T extends string> = {
   values: Record<T, unknown>;
@@ -12,8 +12,8 @@ export const Select = <T extends string>({
   setValue,
 }: SelectProps<T>) => {
   const onChange = useCallback(
-    (event) => {
-      setValue(event.target.value as T);
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      setValue(event.currentTarget.value as T);
     },
     [setValue],
   );
@@ -32,8 +32,8 @@ export const ButtonSelect = <T extends string>({
   setValue,
 }: SelectProps<T>) => {
   const onClick = useCallback(
-    (event) => {
-      setValue(event.target.value as T);
+    (event: MouseEvent<HTMLButtonElement>) => {
+      setValue(event.currentTarget.value as T);
     },
     [setValue],
   );

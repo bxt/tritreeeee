@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import type { FC } from 'react';
 import styles from './CircleSections.module.css';
 import type { TriangleCoords, TriangleVisualizer } from '../types';
 import { distance, interpolatePoints, rotate } from '../coords';
@@ -6,7 +6,7 @@ import { distance, interpolatePoints, rotate } from '../coords';
 const circleSectionsDepth = 7;
 const circleSectionsStroke = 5;
 
-const CircleSection: VFC<{
+const CircleSection: FC<{
   coords: TriangleCoords;
   orientation: number;
   socketCount: number;
@@ -36,7 +36,7 @@ const CircleSection: VFC<{
   );
 };
 
-const CircleCover: VFC<{
+const CircleCover: FC<{
   coords: TriangleCoords;
   orientation: number;
   socketCount: number;

@@ -1,4 +1,4 @@
-import { VFC, useCallback } from 'react';
+import { type FC, useCallback } from 'react';
 import { interpolatePoints } from './coords';
 import styles from './TriTreeVisualizer.module.css';
 import type {
@@ -8,7 +8,7 @@ import type {
   TriTree,
 } from './types';
 
-const Triangle: VFC<{
+const Triangle: FC<{
   coords: TriangleCoords;
   triTree: TriTree;
   path: Path;
@@ -70,7 +70,7 @@ const Triangle: VFC<{
   }
 };
 
-export const TriTreeVisualizer: VFC<{
+export const TriTreeVisualizer: FC<{
   triTree: TriTree;
   onClickTriangle: (path: Path) => void;
   TriangleVisualizer: TriangleVisualizer;

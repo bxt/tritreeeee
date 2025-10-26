@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import type { FC } from 'react';
 
 export const directions = ['mid', 'left', 'right', 'top'] as const;
 export type Direction = typeof directions[number];
@@ -11,7 +11,7 @@ export type TriTree =
   | { divided: true; children: Record<Direction, TriTree> }
   | { divided: false; orientation: number };
 
-export type TriangleVisualizer = VFC<{
+export type TriangleVisualizer = FC<{
   coords: TriangleCoords;
   orientation: number;
   path: Path;
