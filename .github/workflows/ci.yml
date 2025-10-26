@@ -43,10 +43,9 @@ jobs:
         run: npm run build
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
-          retention-days: 2
 
   deploy:
     name: Deploy
