@@ -4,8 +4,8 @@
 
 This is a web site that allows to display and edit "Tritrees" as inspired by [Jeff
 aka @ippsketch's Tweet](https://twitter.com/ippsketch/status/1414947706968199170/photo/2).
-You can create all kinds of shapes from triangles, by subdeviding and rotating them.
-There's 4 render modes and 3 color shemes available.
+You can create all kinds of shapes from triangles, by subdividing and rotating them.
+There's 4 render modes and 3 color schemes available.
 
 [You can find it running here](https://bxt.github.io/tritreeeee/).
 
