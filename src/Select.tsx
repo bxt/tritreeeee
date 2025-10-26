@@ -1,4 +1,5 @@
-import { useCallback, Fragment, type MouseEvent, type ChangeEvent } from 'react';
+import type { MouseEvent, ChangeEvent } from 'react';
+import { useCallback, Fragment } from 'react';
 
 type SelectProps<T extends string> = {
   values: Record<T, unknown>;

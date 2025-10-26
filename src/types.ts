@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 export const directions = ['mid', 'left', 'right', 'top'] as const;
-export type Direction = typeof directions[number];
+export type Direction = (typeof directions)[number];
 export type Path = Direction[];
 
 export type Coord = [number, number];
